@@ -28,88 +28,27 @@
 		</nav>
   </div -->
 
-<!--  PHP validation code starts here  -->
-
-<?php
-  // define variables and set to empty values
-
-  $nameErr = $regErr = $cgpaErr =  "";
-  $name = $reg = $cgpa =  "";
-
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-     if (empty($_POST["name"])) {
-       $nameErr = "Name is required";
-     } else {
-       $name = test_input($_POST["name"]);
-       // check if name only contains letters and whitespace
-       if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
-         $nameErr = "Only letters and white space allowed";
-       }
-     }
-
-     if (empty($_POST["reg"])) {
-       $regErr = "Registration Number is required";
-     } else {
-       $reg = test_input($_POST["reg"]);
-       // check if registration number is well-formed
-
-       if (!is_numeric($reg)) {
-         $regErr = "Only integer number allowed";
-       } else if (strlen($reg) != 10 ) {
-         $regErr = "10 digits only";
-       }
-     }
-
-     if (empty($_POST["cgpa"])) {
-       $cgpaErr = "OK. OK, Don't be so shy. Tell us about CGPA";
-    }  else {
-       $cgpa = test_input($_POST["cgpa"]);
-       // check  if cgpa is in proper format
-       if(!is_float($cgpa)) {
-         $cgpaErr = "CGPA must be value";
-       } else {
-         $cgpa = round($cgpa, 2);
-          if(($cgpa > 4) || ( $cgpa < 0)) {
-          $cgpaErr = "CGPA cannot be more than 4.00 or less than 0.00";
-        }
-       }
-     }
-  }
-
-  function test_input($data) {
-     $data = trim($data);
-     $data = stripslashes($data);
-     $data = htmlspecialchars($data);
-     return $data;
-  }
-
-?>
-
-<!--  PHP validation code ends here  -->
-
-
+<!-- html form code goes here -->
 
 		<div class="container">
 			<div class="col-md-4 col-md-offset-4">
 			  <h2>ADD Student Info</h2>
 
-			  <form role="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+			  <form role="form" action="add_data.php" method="POST">
 			    <div class="form-group">
 			      <label for="name">Name</label>
 			      <input type="text" name="name"  class="form-control" required>
-            <span class="error">* <?php echo $nameErr;?></span>
+
 			    </div>
 
 			    <div class="form-group">
 			      <label for="reg">Reg NO</label>
 			      <input type="text" name="reg" class="form-control" required>
-            <span class="error">* <?php echo $regErr;?></span>
 			    </div>
 
 			    <div class="form-group">
 			      <label for="cgpa">CGPA</label>
 			      <input type="text" name="cgpa" class="form-control">
-            <span class="error">* <?php echo $cgpaErr;?></span>
 			    </div>
 
 			    <button type="submit" class="btn btn-primary pull-right">ADD</button>
@@ -118,21 +57,7 @@
 			</div>
 		</div>
 
-
-  <!--
-<?php
-    $sql = "INSERT INTO studentinfo (name, registration_no, cgpa)
-    VALUES ('$name', '$reg', '$cgpa')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Your Data has been updated Succesfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-?>
-
-
-
+<!-- html form code ends here -->
 
 </body>
 </html>
