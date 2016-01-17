@@ -70,8 +70,8 @@
     VALUES ('$name', '$reg', '$cgpa')";
 
     if ($conn->query($sql) === TRUE) {
-       $message = "Your Data has been updated Succesfully";
-       header('Location: index.php?meg='.$message);
+        echo "Your Data has been updated Succesfully";
+       header('Location: index.php');
     } else {
         //echo "Error: " . $sql . "<br>" . $conn->error;
         $message = "Something went wrong";
