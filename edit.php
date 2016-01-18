@@ -28,6 +28,22 @@ if ($result->num_rows > 0) {
   	<script src="js/bootstrap.min.js"></script>
 </head>
 <body>
+  <!-- code for navigation bar -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.php">studenInfo</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li ><a href="index.php">Home</a></li>
+        <li ><a href="add.php">ADD NEW Student</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- navigatioin bar code ends -->
+
+
 
 
 

@@ -21,10 +21,30 @@ $result = $conn->query($sql);
 
 ?>
 
+<!-- code for navigation bar -->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.php">studenInfo</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li ><a href="add.php">ADD NEW Student</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- navigatioin bar code ends -->
+
+
+
+
+
   <div class="container">
     <h2>Student Info Display</h2>
     <p>Every Students from database are displyed here.</p>
-    <a href="add.php"><button type="submit" class="btn btn-success pull-right">Add New</button></a>
+<!-- right side add buttton commented     <a href="add.php"><button type="submit" class="btn btn-success pull-right">Add New</button></a>
+-->
     <table class="table">
       <thead>
         <tr>
