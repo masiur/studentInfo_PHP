@@ -2,9 +2,12 @@
   // define variables and set to empty values
 
   $nameErr = $regErr = $cgpaErr =  "";
-  $name = $reg = $cgpa =  "";
+  $name = $reg = $cgpa = $id =   "";
+  $flag = 2;
+
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST["id"];
      if (empty($_POST["name"])) {
        $nameErr = "Name is required";
        $flag = 1;
@@ -66,18 +69,20 @@
 
 // Insert data to database if there is no error
   if ($flag != 1) {
-    $sql = "INSERT INTO studentinfo (name, registration_no, cgpa)
-    VALUES ('$name', '$reg', '$cgpa')";
+    $sql = "UPDATE studentinfo SET name = '$name', registration_no='$reg', cgpa='$cgpa' WHERE id=$id";
 
     if ($conn->query($sql) === TRUE) {
         echo "Your Data has been updated Succesfully";
        header('Location: index.php');
     } else {
         //echo "Error: " . $sql . "<br>" . $conn->error;
-        $message = "Something went wrong";
-        header('Location: index.php?meg='.$message);
+        $message = "Something went wrong . query failed";
+        echo $message;
+        //header('Location: index.php?meg='.$message);
     }
     $conn->close();
+  } else {
+    echo "Something went wrong";
   }
 
 ?>
