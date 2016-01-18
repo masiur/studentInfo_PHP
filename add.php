@@ -31,24 +31,24 @@
 <!-- html form code goes here -->
 
 		<div class="container">
-			<div class="col-md-4 col-md-offset-4">
+			<div class="col-md-6 col-md-offset-3">
 			  <h2>ADD Student Info</h2>
 
 			  <form role="form" action="add_data.php" method="POST">
 			    <div class="form-group">
 			      <label for="name">Name</label>
-			      <input type="text" name="name"  class="form-control" required>
+			      <input type="text" name="name" placeholder="Full Name"  class="form-control" required>
 
 			    </div>
 
 			    <div class="form-group">
-			      <label for="reg">Reg NO</label>
-			      <input type="text" name="reg" class="form-control" required>
+			      <label for="reg">Registration NO</label>
+			      <input type="text" name="reg" placeholder="10 Digit Registration Number" class="form-control" required>
 			    </div>
 
 			    <div class="form-group">
 			      <label for="cgpa">CGPA</label>
-			      <input type="text" name="cgpa" class="form-control">
+			      <input type="text" name="cgpa" placeholder="Provide CGPA as '4.00'" class="form-control">
 			    </div>
 
 			    <button type="submit" class="btn btn-primary pull-right">ADD</button>

@@ -22,16 +22,17 @@ $result = $conn->query($sql);
 ?>
 
   <div class="container">
-    <h2>Contextual Classes</h2>
-    <p>Contextual classes can be used to color table rows or table cells. The classes that can be used are: .active, .success, .info, .warning, and .danger.</p>
+    <h2>Student Info Display</h2>
+    <p>Every Students from database are displyed here.</p>
+    <a href="add.php"><button type="submit" class="btn btn-success pull-right">Add New</button></a>
     <table class="table">
       <thead>
         <tr>
           <th>Name</th>
           <th>Registration No</th>
           <th>CGPA</th>
-          <th>#</th>
-          <th>#</th>
+          <th>Action</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>

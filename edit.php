@@ -32,7 +32,7 @@ if ($result->num_rows > 0) {
 
 
               <div class="container">
-          			<div class="col-md-4 col-md-offset-4">
+          			<div class="col-md-6 col-md-offset-3">
           			  <h2>Edit Student Info</h2>
 
           			  <form role="form" action="update.php" method="POST">
