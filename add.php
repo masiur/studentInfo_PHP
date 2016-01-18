@@ -14,19 +14,7 @@
     </style>
 </head>
 <body>
-  <!--div>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="#">Student Info</a>
-		    </div>
-		    <ul class="nav navbar-nav">
-		      <li><a href="#">Home</a></li>
-		      <li class="active"><a href="">ADD</a></li>
-		    </ul>
-		  </div>
-		</nav>
-  </div -->
+
   <!-- code for navigation bar -->
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -75,6 +63,16 @@
            $regErr = "10 digits only";
            $flag = 1;
          }
+         // check if req no exists
+         $sql1 = "SELECT * FROM studentinfo where registration_no='$reg'";
+         if ($conn->query($sql1) === TRUE) {
+           if ($result->num_rows > 0) {
+             $regErr = "Registration number exists";
+             $flag = 1;
+           }
+         }
+         // exist check code ends here
+
        }
 
        if (empty($_POST["cgpa"])) {
@@ -99,18 +97,20 @@
 
       // Insert data to database if there is no error
        if ($flag != 1) {
-         $sql = "INSERT INTO studentinfo (name, registration_no, cgpa)
+
+         $sql2 = "INSERT INTO studentinfo (name, registration_no, cgpa)
          VALUES ('$name', '$reg', '$cgpa')";
 
-         if ($conn->query($sql) === TRUE) {
-             echo "Your Data has been updated Succesfully";
-            //header('Location: index.php');
-         } else {
-             //echo "Error: " . $sql . "<br>" . $conn->error;
-             $message = "Something went wrong";
-             //header('Location: index.php?meg='.$message);
-         }
-         $conn->close();
+         if ($conn->query($sql2) === TRUE) {
+               // echo "Data added Succesfully";
+               header('Location: index.php');
+             }  else {
+                   //echo "Error: " . $sql . "<br>" . $conn->error;
+                   $message = "Something went wrong.  sql  error";
+                   //header('Location: index.php?meg='.$message);
+            }
+
+           $conn->close();
        } else {
         // echo "something went wrong";
        }
@@ -129,23 +129,6 @@
 
 ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- html form code goes here -->
 
 		<div class="container">
@@ -163,11 +146,13 @@
 			    <div class="form-group">
 			      <label for="reg">Registration NO</label>
 			      <input type="text" name="reg" placeholder="10 Digit Registration Number" class="form-control" required>
+            <span class="error">* <?php echo $regErr;?></span>
 			    </div>
 
 			    <div class="form-group">
 			      <label for="cgpa">CGPA</label>
 			      <input type="text" name="cgpa" placeholder="Provide CGPA as '4.00'" class="form-control">
+            <span class="error">* <?php echo $cgpaErr;?></span>
 			    </div>
 
 			    <button type="submit" class="btn btn-primary pull-right">ADD</button>
