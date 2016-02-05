@@ -23,7 +23,7 @@
       </div>
       <ul class="nav navbar-nav">
         <li ><a href="index.php">Home</a></li>
-        <li class="active"><a href="#">ADD NEW Student</a></li>
+        <li class="active"><a href="add.php">ADD NEW Student</a></li>
       </ul>
     </div>
   </nav>
@@ -107,7 +107,7 @@
 
          if ($conn->query($sql2) === TRUE) {
                // echo "Data added Succesfully";
-               header('Location: index.php');
+               header("Location: index.php");
              }  else {
                    //echo "Error: " . $sql . "<br>" . $conn->error;
                    $message = "Something went wrong.  sql  error";
