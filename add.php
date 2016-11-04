@@ -39,7 +39,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
        if (empty($_POST["name"])) {
          $nameErr = "Name is required";
-         $flag = 1;
+         $flag = 1; // flag is used to check if error or ok
        } else {
          $name = test_input($_POST["name"]);
          // check if name only contains letters and whitespace
@@ -53,24 +53,28 @@
          $regErr = "Registration Number is required";
          $flag = 1;
        } else {
-         $reg = test_input($_POST["reg"]);
-         // check if registration number is well-formed
+	         $reg = test_input($_POST["reg"]);
+	         // check if registration number is well-formed
 
-         if (!is_numeric($reg)) {
-           $regErr = "Only integer number allowed";
-           $flag = 1;
-         } else if (strlen($reg) != 10 ) {
-           $regErr = "10 digits only";
-           $flag = 1;
-         }
-         // check if req no exists
-         $sql1 = "SELECT * FROM studentinfo where registration_no='$reg'";
-         if ($conn->query($sql1) === TRUE) {
-           if ($result->num_rows > 0) {
-             $regErr = "Registration number exists";
-             $flag = 1;
-           }
-         }
+	         if (!is_numeric($reg)) {
+	           $regErr = "Only integer number allowed";
+	           $flag = 1;
+	         } else if (strlen($reg) != 10 ) {
+	           $regErr = "10 digits only";
+	           $flag = 1;
+	         } else {
+	         // check if reg no exists no exists
+
+	         $sql1 = "SELECT * FROM studentinfo where registration_no='$reg'";
+					 $result = $conn->query($sql1);
+					 if ($result->num_rows > 0) {
+					     // output data of each row
+					     while($row = $result->fetch_assoc()) {
+					       $flag= 1;
+								 $regErr = "Registration Number already exists";
+					     }
+					   }
+	       }
          // exist check code ends here
 
        }
@@ -162,10 +166,6 @@
 		</div>
 
 <!-- html form code ends here -->
-
-
-
-
 
 
 </body>

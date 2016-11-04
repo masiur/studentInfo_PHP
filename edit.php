@@ -18,7 +18,7 @@ if ($result->num_rows > 0) {
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Home || Simple CRUD with PHP</title>
+	<title>Update || Simple CRUD with PHP</title>
 	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<meta name="author" content="Maisur Rahman Siddiki">
@@ -43,10 +43,6 @@ if ($result->num_rows > 0) {
 
   <!-- navigatioin bar code ends -->
 
-
-
-
-
               <div class="container">
           			<div class="col-md-6 col-md-offset-3">
           			  <h2>Edit Student Info</h2>
@@ -65,7 +61,7 @@ if ($result->num_rows > 0) {
 
           			    <div class="form-group">
           			      <label for="cgpa">CGPA</label>
-          			      <input type="text" name="cgpa" value="<?php echo $cgpa; ?>" class="form-control">
+          			      <input type="text" name="cgpa" value="<?php echo $cgpa; ?>" class="form-control" required>
           			    </div>
 
           			    <button type="submit" class="btn btn-success pull-right">Update</button>
