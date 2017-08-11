@@ -40,11 +40,6 @@ $result = $conn->query($sql);
 </nav>
 
 <!-- navigatioin bar code ends -->
-
-
-
-
-
   <div class="container">
     <h2>Student Info Display</h2>
     <p>Every Students from database are displyed here.</p>
@@ -73,7 +68,7 @@ $result = $conn->query($sql);
                       <td>'.$row["registration_no"] .'</td>
                       <td>'.$row["cgpa"] .'</td>
                       <td><a href="edit.php?id='.$row['id'].'"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>
-                      <td><a href="delete.php?id='.$row['id'].'"><button type="button" class="btn btn-primary btn-xs">Delete</button></a></td>
+                      <td><a href="delete.php?id='.$row['id'].'"><button type="button" class="btn btn-danger btn-xs">Delete</button></a></td>
                       </tr>';
             }
         } else {
@@ -81,8 +76,6 @@ $result = $conn->query($sql);
         }
       $conn->close();
 ?>
-
-
 
 
       </tbody>
