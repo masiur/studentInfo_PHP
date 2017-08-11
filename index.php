@@ -11,7 +11,12 @@
   	<meta name"description" content="Simple CRUD with PHP">
   	<meta name="keywords" content="HTML, CSS, Bootstrap, JSP, Masiur , Basic CRUD">
   	<link rel="stylesheet" href="css/bootstrap.min.css">
-  	<script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">  
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    
 </head>
 <body>
 
@@ -45,7 +50,7 @@ $result = $conn->query($sql);
     <p>Every Students from database are displyed here.</p>
 <!-- right side add buttton commented     <a href="add.php"><button type="submit" class="btn btn-success pull-right">Add New</button></a>
 -->
-    <table class="table">
+    <table class="table table-striped table-hover table-bordered" id="dataTable">
       <thead>
         <tr>
           <th>Name</th>
@@ -63,7 +68,7 @@ $result = $conn->query($sql);
             while($row = $result->fetch_assoc()) {
 
 
-                echo  '<tr class="success">
+                echo  '<tr>
                       <td>'.$row["name"].'</td>
                       <td>'.$row["registration_no"] .'</td>
                       <td>'.$row["cgpa"] .'</td>
@@ -83,7 +88,11 @@ $result = $conn->query($sql);
       </tbody>
     </table>
   </div>
-
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#dataTable').DataTable();
+  });
+</script>
 
 </body>
 </html>

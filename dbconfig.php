@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "sust";
+$password = "";
 $dbname = "studentinfo";
 
 // Create connection
