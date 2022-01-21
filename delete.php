@@ -1,12 +1,27 @@
-<?php require('dbconfig.php');
-$id = $_GET["id"];
-$sql = "DELETE FROM studentinfo where id='$id'";
-$result = $conn->query($sql);
-if ($conn->query($sql) === TRUE) {
-    //echo "Record deleted successfully";
+<?php
+session_start();
+require('dbconfig.php');
+
+$dbname = 'studentinfo';
+$collection = 'studentinfo_collection';
+
+//DB connection
+$db = new DbManager();
+$conn = $db->getConnection();
+
+
+$deletes = new MongoDB\Driver\BulkWrite();
+$deletes->delete(
+    ['_id' => new MongoDB\BSON\ObjectID($_GET['id'])],
+    ['limit' => 1]
+);
+
+$result = $conn->executeBulkWrite("$dbname.$collection", $deletes);
+
+if($result) {
+    echo nl2br("Record deleted successfully \n");
+    $_SESSION['success'] = "Record deleted successfully";
     header('Location: index.php');
-} else {
-    echo "Error deleting record: " . $conn->error;
 }
-$conn->close();
+
 ?>

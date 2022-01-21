@@ -1,4 +1,6 @@
-<?php require('dbconfig.php');
+<?php
+session_start();
+require('dbconfig.php');
   // define variables and set to empty values
 
   $nameErr = $regErr = $cgpaErr =  "";
@@ -7,7 +9,7 @@
 
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST["id"];
+    $id = $_POST["id"]; // the old data id we are going to update
      if (empty($_POST["name"])) {
        $nameErr = "Name is required";
        $flag = 1;
@@ -67,20 +69,38 @@
 
 //--  PHP validation code ends here
 
+
+$dbname = 'studentinfo';
+$collection = 'studentinfo_collection';
+
+//DB connection
+$db = new DbManager();
+$conn = $db->getConnection();
+
 // Insert data to database if there is no error
   if ($flag != 1) {
-    $sql = "UPDATE studentinfo SET name = '$name', registration_no='$reg', cgpa='$cgpa' WHERE id=$id";
+      $updatedStudent = array(
+          'name' => $name,
+          'reg' => $reg,
+          'cgpa' => $cgpa,
+          'tags' => array('developer','admin')
+      );
+      $updating = new MongoDB\Driver\BulkWrite();
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Your Data has been updated Succesfully";
+      $updating->update(
+          ['_id' => new MongoDB\BSON\ObjectId($id)],
+          ['$set' => $updatedStudent],
+          ['multi' => true, 'upsert' => true]
+      );
+      $result = $conn->executeBulkWrite("$dbname.$collection", $updating);
+
+      if($result) {
+          echo nl2br("Record updated successfully \n");
+      }
+
+      $_SESSION['success'] = "Student Updated successfully";
        header('Location: index.php');
-    } else {
-        //echo "Error: " . $sql . "<br>" . $conn->error;
-        $message = "Something went wrong . query failed";
-        echo $message;
-        //header('Location: index.php?meg='.$message);
-    }
-    $conn->close();
+
   } else {
     echo "Something went wrong";
   }

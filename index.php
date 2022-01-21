@@ -1,4 +1,6 @@
-<?php require('dbconfig.php');
+<?php
+session_start();
+require('dbconfig.php');
 ?>
 
 <!DOCTYPE html>
@@ -21,8 +23,12 @@
 <body>
 
 <?php
-$sql = "SELECT *FROM studentinfo";
-$result = $conn->query($sql);
+$dbname = 'studentinfo';
+$collection = 'studentinfo_collection';
+
+//DB connection
+$db = new DbManager();
+$conn = $db->getConnection();
 
 ?>
 
@@ -34,10 +40,20 @@ $result = $conn->query($sql);
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
-      <li ><a href="add.php">ADD NEW Student</a></li>
+      <li ><a href="create.php">ADD NEW Student</a></li>
     </ul>
   </div>
 </nav>
+
+<?php
+
+
+if(isset($_SESSION['success'])){
+    echo "<div class='alert alert-success'>".$_SESSION['success']."</div>";
+}
+
+
+?>
 
 <!-- navigatioin bar code ends -->
   <div class="container">
@@ -58,23 +74,27 @@ $result = $conn->query($sql);
       <tbody>
 
 <?php
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
 
+$filter = [];
+$option = [];
 
-                echo  '<tr>
-                      <td>'.$row["name"].'</td>
-                      <td>'.$row["registration_no"] .'</td>
-                      <td>'.$row["cgpa"] .'</td>
-                      <td><a href="edit.php?id='.$row['id'].'"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>
-                      <td><a href="delete.php?id='.$row['id'].'"><button type="button" class="btn btn-danger btn-xs">Delete</button></a></td>
-                      </tr>';
+$read = new MongoDB\Driver\Query($filter, $option);
+$students = $conn->executeQuery("$dbname.$collection", $read);
+
+        foreach ($students as $student) {
+//            print_r($student);
+
+            echo  '<tr>
+                  <td>'.$student->name.'</td>
+                  <td>'.$student->reg.'</td>
+                  <td>'.$student->cgpa.'</td>
+                  <td><a href="edit.php?id='.$student->_id.'"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>
+                  <td><a href="delete.php?id='.$student->_id.'"><button type="button" class="btn btn-danger btn-xs">Delete</button></a></td>
+                  </tr>';
             }
-        } else {
-            echo "0 results";
-        }
-      $conn->close();
+
+        session_destroy();
+
 ?>
 
 

@@ -1,19 +1,49 @@
-<?php require('dbconfig.php');
-$id = $_GET["id"];
-$sql = "SELECT * FROM studentinfo where id='$id'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-      $name = $row["name"];
-      $reg = $row["registration_no"];
-      $cgpa = $row["cgpa"];
+<?php
+session_start();
+require('dbconfig.php');
 
-    }
-  } else {
-    echo "0 results";
-  }
-  $conn->close();
+$dbname = 'studentinfo';
+$collection = 'studentinfo_collection';
+
+//DB connection
+$db = new DbManager();
+$conn = $db->getConnection();
+
+$id = $_GET["id"];
+//echo $reg;
+
+$filter = [ "_id" => new MongoDB\BSON\ObjectId($id)];
+$option = [];
+
+$read = new MongoDB\Driver\Query($filter, $option);
+
+$students = $conn->executeQuery("$dbname.$collection", $read);
+//print_r($students[0]);
+//$name = null;
+//$reg = null;
+//$cgpa = null;
+foreach ($students as $student) {
+//    print_r($student);
+    $name = $student->name;
+    $reg = $student->reg;
+    $cgpa = $student->cgpa;
+
+}
+
+//$sql = "SELECT * FROM studentinfo where id='$id'";
+//$result = $conn->query($sql);
+//if ($result->num_rows > 0) {
+//    // output data of each row
+//    while($row = $result->fetch_assoc()) {
+//      $name = $row["name"];
+//      $reg = $row["registration_no"];
+//      $cgpa = $row["cgpa"];
+//
+//    }
+//  } else {
+//    echo "0 results";
+//  }
+//  $conn->close();
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +66,7 @@ if ($result->num_rows > 0) {
       </div>
       <ul class="nav navbar-nav">
         <li ><a href="index.php">Home</a></li>
-        <li ><a href="add.php">ADD NEW Student</a></li>
+        <li ><a href="create.php">ADD NEW Student</a></li>
       </ul>
     </div>
   </nav>

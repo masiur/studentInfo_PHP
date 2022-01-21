@@ -1,14 +1,26 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "studentinfo";
+class DbManager {
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    //Database configuration
+    private $dbhost = 'localhost';
+    private $dbport = '27017';
+    private $conn;
+
+    function __construct(){
+        //Connecting to MongoDB
+        try {
+            //Establish database connection
+            $this->conn = new MongoDB\Driver\Manager('mongodb://'.$this->dbhost.':'.$this->dbport);
+        }catch (MongoDBDriverExceptionException $e) {
+            echo $e->getMessage();
+            echo nl2br("n");
+        }
+    }
+
+    function getConnection() {
+        return $this->conn;
+    }
+
 }
 
 ?>
